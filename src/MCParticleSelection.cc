@@ -133,19 +133,19 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 	int pdg;
 	for(int i=0; i< _mcpartvec.size(); i++){
 		pdg = _mcpartvec.at(i)->getPDG();
-		for(int j=0; j< _pdgs.size(); j++){
-			if(pdg == _pdgs.at(j)){
+		
+		if(pdg == 421 || pdg == -421){
 				//std::cout<<"found PDG: "<<pdg<<std::endl;
 
 				//hacks make sure we find a kaon + pion now
-				std::vector<MCParticle*> daughters = _mcpartvec.at(i)->getDaughters();
-				for(int k=0; k < daughters.size(); k++){
-					if(daughters.at(i)->getPDG() == 321 || daughters.at(i)->getPDG() == -321){
+			std::vector<MCParticle*> daughters = _mcpartvec.at(i)->getDaughters();
+			for(int k=0; k < daughters.size(); k++){
+				if(daughters.at(k)->getPDG() == 321 || daughters.at(k)->getPDG() == -321){
 						std::cout<<"found d0->K"<<std::endl;
-					}
 				}
 			}
 		}
+		
 	}
   
 
