@@ -62,7 +62,7 @@ using namespace lcio;
   std::vector<Track*> _trackvec{};
   std::vector<MCParticle*> _mcpartvec{};
   int   _printing{};
-  std::vector<int> _pdgs{}
+  std::vector<int> _pdgs{};
 
    //need to no BField to calculate stuff
    double BField{};
