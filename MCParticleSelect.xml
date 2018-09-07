@@ -1,0 +1,39 @@
+<!--#############################################################-->
+<!--#                                                           #-->
+<!--#     Example steering file for Marlin                      #-->
+<!--#  reads and writes tracks to/from flat from with lcio      #-->
+<!--#                                                      	#-->
+<!--#                                                           #-->
+<!--#         			                                #--> 
+<!--#                                                           #-->
+<!--#############################################################-->
+
+
+<marlin>
+	<execute>
+   	<processor name="MyMCParticleSelection"/>  
+ 	</execute>
+
+	<global>
+		<parameter name="LCIOInputFiles">  </parameter>
+   		<parameter name="SkipNEvents" value="0" />
+   		<parameter name="MaxRecordNumber" value="0" /> <!-- 0 is all events -->
+   		<parameter name="SupressCheck" value="false" />
+   		<parameter name="GearXMLFile" value="gear_ILD_l5_o1_v02_dd4hep.xml" />
+   		<parameter name="Verbosity"    options= "DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> DEBUG </parameter>
+ 	</global>
+	
+	<processor name="MyMCParticleSelection" type="MCParticleSelection">   
+
+		<parameter name="Pdgs" type="IntVec"> 421 -421 </parameter>
+
+		<!-- input/output collection names -->
+		<parameter name="InputTrackCollectionName" value="MarlinTrkTracks" />
+		<parameter name="McParticleCollectionName" value="MCParticle" />
+		
+		<!--<parameter name="OutputParticleCollectionName" type="string" lcioOutType="ReconstructedParticle">NewPfoCol</parameter> -->
+   
+ 	</processor>
+
+
+</marlin>
