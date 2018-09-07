@@ -135,7 +135,15 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 		pdg = _mcpartvec.at(i)->getPDG();
 		for(int j=0; j< _pdgs.size(); j++){
 			if(pdg == _pdgs.at(j)){
-				std::cout<<"found PDG: "<<pdg<<std::endl;
+				//std::cout<<"found PDG: "<<pdg<<std::endl;
+
+				//hacks make sure we find a kaon + pion now
+				std::vector<MCParticle*> daughters = _mcpartvec.at(i)->getDaughters();
+				for(int k=0; k < daughters.size(); k++){
+					if(daughters.at(i) == 321 || daughters.at(i) == -321){
+						std::cout<<"found d0->K"<<std::endl;
+					}
+				}
 			}
 		}
 	}
@@ -145,7 +153,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 //comment this next line when appending to collection
  // evt->addCollection(partCollection , _outputParticleCollectionName.c_str() ); 
  std::cout << "======================================== event " << nEvt << std::endl ;
-
+nEvt++;
 }
 void MCParticleSelection::end(){
 	
