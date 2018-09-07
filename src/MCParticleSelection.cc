@@ -140,7 +140,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 				//hacks make sure we find a kaon + pion now
 				std::vector<MCParticle*> daughters = _mcpartvec.at(i)->getDaughters();
 				for(int k=0; k < daughters.size(); k++){
-					if(daughters.at(i) == 321 || daughters.at(i) == -321){
+					if(daughters.at(i)->getPDG() == 321 || daughters.at(i)->getPDG() == -321){
 						std::cout<<"found d0->K"<<std::endl;
 					}
 				}
