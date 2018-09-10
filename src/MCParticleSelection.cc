@@ -174,7 +174,16 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 				for(int j=0; j<_trackvec.size(); j++){
 					if( (_trackvec.at(j)->getD0() >= 0.5) || (_trackvec.at(j)->getZ0() >= 0.5) ){
 						std::cout<<"found a displaced track"<<std::endl;
-						Track* t = new Track( _trackvec.at(j) );
+						Track* T =  _trackvc.at(j);
+						TrackImpl* t = new TrackImpl();
+						t->setD0( T->getD0() );
+						t->setPhi( T->getPhi() );
+						t->setOmega( T->getOmega() );
+						t->setZ0( T->getZ0() );
+						t->setTanLambda( T->getTanLambda() );
+						t->setCovMatrix( T->getCovmatrix() );
+						t->setReferencePoint( T->getReferencePoint() );
+
 						trkCollection->addElement( t );
 					}
 				}
