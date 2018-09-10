@@ -172,7 +172,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 
 				FindTracks(evt);
 				for(int j=0; j<_trackvec.size(); j++){
-					if( (_trackvec.at(j)->getD0() >= 0.5) && (_trackvec.at(j)->getZ0() >= 0.5) ){
+					if( (_trackvec.at(j)->getD0() >= 0.5) || (_trackvec.at(j)->getZ0() >= 0.5) ){
 						std::cout<<"found a displaced track"<<std::endl;
 						trkCollection->addElement( _trackvec.at(j) );
 					}
@@ -186,8 +186,8 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 
   // Add new collection to event
 //comment this next line when appending to collection
-  //evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
-  evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
+  evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
+  //evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
 
  std::cout << "======================================== event " << nEvt << std::endl ;
 nEvt++;
