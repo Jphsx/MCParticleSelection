@@ -136,6 +136,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
   
   LCCollectionVec * trkCollection = new LCCollectionVec(LCIO::TRACK);
   LCCollectionVec * mcCollection = new LCCollectionVec(LCIO::MCPARTICLE);
+   mcCollection->setSubset(true);
  //EVENT::LCCollection* partCollection = evt->getCollection("NewPfoCol");
 
 	//loop over mcparts see if there are any d0 or d0 bar
