@@ -43,7 +43,7 @@ MCParticleSelection::MCParticleSelection() : Processor("MCParticleSelection") {
                              	_outputTrkCollectionName,
                              	outputTrkCollectionName);
 
-	std::string outputMCCollectionName = "x";
+	std::string outputMCCollectionName = "y";
   	registerOutputCollection( LCIO::MCPARTICLE,
                              	"OutputMCCollectionName" ,
 			     	"Output MC Collection Name "  ,
@@ -136,6 +136,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
   
   LCCollectionVec * trkCollection = new LCCollectionVec(LCIO::TRACK);
   LCCollectionVec * mcCollection = new LCCollectionVec(LCIO::MCPARTICLE);
+   mcCollection->setSubset(true);
  //EVENT::LCCollection* partCollection = evt->getCollection("NewPfoCol");
 
 	//loop over mcparts see if there are any d0 or d0 bar
@@ -185,8 +186,8 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 
   // Add new collection to event
 //comment this next line when appending to collection
- // evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
- // evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
+  evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
+  evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
 
  std::cout << "======================================== event " << nEvt << std::endl ;
 nEvt++;
