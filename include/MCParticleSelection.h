@@ -68,7 +68,8 @@ using namespace lcio;
    double BField{};
  
 // _inputTrackCollectionName 
-  std::string _outputParticleCollectionName{};
+  std::string _outputTrkCollectionName{};
+  std::string _outputMCCollectionName{};
   std::string _inputTrackCollectionName{};
   std::string _inputMcParticleCollectionName{};
 //  std::string m_rootFile{};
