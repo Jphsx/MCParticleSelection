@@ -197,7 +197,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
   // Add new collection to event
 //comment this next line when appending to collection
   evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
-  //evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
+  evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
 
  std::cout << "======================================== event " << nEvt << std::endl ;
 nEvt++;
