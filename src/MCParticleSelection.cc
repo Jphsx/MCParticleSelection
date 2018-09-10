@@ -134,7 +134,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 
   
   
-  LCCollectionVec * trkCollection = new LCCollectionVec(LCIO::RECONSTRUCTEDPARTICLE);
+  LCCollectionVec * trkCollection = new LCCollectionVec(LCIO::TRACK);
   LCCollectionVec * mcCollection = new LCCollectionVec(LCIO::MCPARTICLE);
  //EVENT::LCCollection* partCollection = evt->getCollection("NewPfoCol");
 
