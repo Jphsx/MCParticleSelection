@@ -11,7 +11,8 @@
 
 <marlin>
 	<execute>
-   	<processor name="MyMCParticleSelection"/>  
+   	<processor name="MyMCParticleSelection"/>
+	<processor name="MyLCIOOutputProcessor"/>
  	</execute>
 
 	<global>
@@ -31,7 +32,16 @@
 		<parameter name="InputTrackCollectionName" value="MarlinTrkTracks" />
 		<parameter name="McParticleCollectionName" value="MCParticle" />
 		
-		<!--<parameter name="OutputParticleCollectionName" type="string" lcioOutType="ReconstructedParticle">NewPfoCol</parameter> -->
+		<parameter name="OutputTrackCollectionName" type="string" lcioOutType="Track">d0candidates</parameter>
+		<parameter name="OutputMCCollectionName" type="string" lcioOutType="MCParticle"> MCd0s </parameter>
+   
+ 	</processor>
+
+	<processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
+     		<!--   standard output: full reconstruction keep all collections -->
+     		<parameter name="LCIOOutputFile" type="string" > ./mcselect.slcio </parameter>
+     		<parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
+		<parameter name="DropCollectionTypes" >CalorimeterHit SimCalorimeterHit LCRelation Cluster SimTrackerHit TrackerHitPlane TrackerHit </parameter>
    
  	</processor>
 

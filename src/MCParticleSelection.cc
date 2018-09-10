@@ -36,12 +36,19 @@ MCParticleSelection::MCParticleSelection() : Processor("MCParticleSelection") {
 				_inputMcParticleCollectionName,
 				inputMcParticleCollectionName);
 
-  	std::string outputParticleCollectionName = "x";
-  	registerOutputCollection( LCIO::RECONSTRUCTEDPARTICLE,
-                             	"OutputParticleCollectionName" ,
-			     	"Output Particle Collection Name "  ,
-                             	_outputParticleCollectionName,
-                             	outputParticleCollectionName);
+  	std::string outputTrkCollectionName = "x";
+  	registerOutputCollection( LCIO::TRACK,
+                             	"OutputTrackCollectionName" ,
+			     	"Output Track Collection Name "  ,
+                             	_outputTrkCollectionName,
+                             	outputTrkCollectionName);
+
+	std::string outputMCCollectionName = "x";
+  	registerOutputCollection( LCIO::MCPARTICLE,
+                             	"OutputMCCollectionName" ,
+			     	"Output MC Collection Name "  ,
+                             	_outputMCCollectionName,
+                             	outputMCCollectionName);
 
 }
 
@@ -122,11 +129,13 @@ bool MCParticleSelection::FindMCParticles( LCEvent* evt ){
 
 void MCParticleSelection::processEvent( LCEvent * evt ) {
  FindMCParticles(evt);
+ 
 
 
   
   
- // LCCollectionVec * partCollection = new LCCollectionVec(LCIO::RECONSTRUCTEDPARTICLE);
+  LCCollectionVec * trkCollection = new LCCollectionVec(LCIO::RECONSTRUCTEDPARTICLE);
+  LCCollectionVec * mcCollection = new LCCollectionVec(LCIO::MCPARTICLE);
  //EVENT::LCCollection* partCollection = evt->getCollection("NewPfoCol");
 
 	//loop over mcparts see if there are any d0 or d0 bar
@@ -156,6 +165,17 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 
 			if(flag1 && flag2 && flag3 ){
 				std::cout<<"found d0->Kpi"<<std::endl;
+				//first add the mc particle 
+				mcCollection->addElement( _mcpartvec.at(i) );
+				//now loop and select tracks of this event with dislaced vertices only > 0.5mm
+
+				FindTracks(evt);
+				for(int j=0; j<_trackvec.size(); j++){
+					if( (_trackvec.at(j)->getD0() >= 0.5) && (_trackvec.at(j)->getZ0() >= 0.5) ){
+						std::cout<<"found a displaced track"<<std::endl;
+						trkCollection->addElement( _trackvec.at(j) );
+					}
+				}
 			}
 			
 		}//end d0 check
@@ -165,7 +185,9 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 
   // Add new collection to event
 //comment this next line when appending to collection
- // evt->addCollection(partCollection , _outputParticleCollectionName.c_str() ); 
+  evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
+  evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
+
  std::cout << "======================================== event " << nEvt << std::endl ;
 nEvt++;
 }
