@@ -20,7 +20,7 @@
    		<parameter name="SkipNEvents" value="0" />
    		<parameter name="MaxRecordNumber" value="0" /> <!-- 0 is all events -->
    		<parameter name="SupressCheck" value="false" />
-   		<parameter name="GearXMLFile" value="gear_ILD_l5_o1_v02_dd4hep.xml" />
+   		<parameter name="GearXMLFile" value="gear_ILD_l5_v02_dd4hep.xml" />
    		<parameter name="Verbosity"    options= "DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT"> DEBUG </parameter>
  	</global>
 	
@@ -41,7 +41,7 @@
      		<!--   standard output: full reconstruction keep all collections -->
      		<parameter name="LCIOOutputFile" type="string" > ./mcselect.slcio </parameter>
      		<parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
-		<parameter name="DropCollectionTypes" >CalorimeterHit SimCalorimeterHit LCRelation Cluster SimTrackerHit TrackerHitPlane TrackerHit </parameter>
+		<parameter name="DropCollectionTypes" > Vertex CalorimeterHit SimCalorimeterHit LCRelation Cluster SimTrackerHit TrackerHitPlane TrackerHit ReconstructedParticle </parameter>
    
  	</processor>
 
