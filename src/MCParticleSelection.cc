@@ -168,6 +168,10 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 				std::cout<<"found d0->Kpi"<<std::endl;
 				//first add the mc particle 
 				mcCollection->addElement( _mcpartvec.at(i) );
+				//also add daughters
+				for(int j=0; j< daughters.size(); j++){
+					mcCollection->addElement( daughters.at(j) );
+				}
 				//now loop and select tracks of this event with dislaced vertices only > 0.5mm
 
 				FindTracks(evt);
@@ -196,6 +200,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 
   // Add new collection to event
 //comment this next line when appending to collection
+  
   evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
   evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
 
