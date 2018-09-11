@@ -178,14 +178,14 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 				//first add the mc particle 
 				mcCollection->addElement( _mcpartvec.at(i) );
 				//also add daughters
-				for(int j=0; j< daughters.size(); j++){
-					mcCollection->addElement( daughters.at(j) );
-				}
+				for(int x=0; x< daughters.size(); x++){
+					mcCollection->addElement( daughters.at(x) );
+				
 				//now loop and select tracks of this event with dislaced vertices only > 0.5mm
 
 				FindTracks(evt);
 
-				MCParticle* mcp = _mcpartvec.at(i);
+				MCParticle* mcp = daughters.at(x);
 				const double* mcpp = mcp->getMomentum();
 				
 				double pt = sqrt(mcpp[1]*mcpp[1] + mcpp[0]*mcpp[0]);
@@ -214,6 +214,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 						trkCollection->addElement( t );
 					}
 				}
+				}//end daughter loop
 			}//end flag condition
 			
 		}//end d0 check
