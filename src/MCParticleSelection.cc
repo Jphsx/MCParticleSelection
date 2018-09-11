@@ -135,6 +135,10 @@ bool MCParticleSelection::FindMCParticles( LCEvent* evt ){
 void MCParticleSelection::processEvent( LCEvent * evt ) {
  FindMCParticles(evt);
  
+	const double c = 2.99792458e8; // m*s^-1        
+  	const double mm2m = 1e-3;
+  	const double eV2GeV = 1e-9;
+  	const double eB = BField*c*mm2m*eV2GeV;
 
 
   
@@ -151,7 +155,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 		
 		if(pdg == _PDG){
 				//std::cout<<"found PDG: "<<pdg<<std::endl;
-
+				
 				//hacks make sure we find a kaon + pion now
 			std::vector<MCParticle*> daughters = _mcpartvec.at(i)->getDaughters();
 			bool flag1 = false;
@@ -180,10 +184,25 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 				//now loop and select tracks of this event with dislaced vertices only > 0.5mm
 
 				FindTracks(evt);
+
+				MCParticle* mcp = _mcpartvec.at(i);
+				const double* mcpp = mcp->getMomentum();
+				
+				double pt = sqrt(mcpp[1]*mcpp[1] + mcpp[0]*mcpp[0]);
+				double q = (double)mcp->getCharge();
+				double ommc = q*eB/pt;
+
+
 				for(int j=0; j<_trackvec.size(); j++){
-					if( (_trackvec.at(j)->getD0() >= 0.01) || (_trackvec.at(j)->getZ0() >= 0.01) ){
-						std::cout<<"found a displaced track"<<std::endl;
-						Track* T =  _trackvec.at(j);
+					Track* T =  _trackvec.at(j);
+					//if( (_trackvec.at(j)->getD0() >= 0.01) || (_trackvec.at(j)->getZ0() >= 0.01) ){
+					double om = T->getOmega();
+					double omerr = sqrt(T->getCovMatrix()[5]);
+					double omup = om + 3*omerr;
+					double omdwn = om - 3*omerr;
+					if( (omdwn <= ommc) && (ommc <= omup) ){
+						std::cout<<"found a matched track"<<std::endl;
+						
 						TrackImpl* t = new TrackImpl();
 						t->setD0( T->getD0() );
 						t->setPhi( T->getPhi() );
@@ -192,11 +211,10 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 						t->setTanLambda( T->getTanLambda() );
 						t->setCovMatrix( T->getCovMatrix() );
 						t->setReferencePoint( T->getReferencePoint() );
-
 						trkCollection->addElement( t );
 					}
 				}
-			}
+			}//end flag condition
 			
 		}//end d0 check
 		
