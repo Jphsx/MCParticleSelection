@@ -176,7 +176,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 
 				FindTracks(evt);
 				for(int j=0; j<_trackvec.size(); j++){
-					if( (_trackvec.at(j)->getD0() >= 0.5) || (_trackvec.at(j)->getZ0() >= 0.5) ){
+					if( (_trackvec.at(j)->getD0() >= 0.009) || (_trackvec.at(j)->getZ0() >= 0.009) ){
 						std::cout<<"found a displaced track"<<std::endl;
 						Track* T =  _trackvec.at(j);
 						TrackImpl* t = new TrackImpl();
