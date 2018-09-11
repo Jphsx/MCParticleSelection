@@ -65,6 +65,7 @@ using namespace lcio;
   std::vector<MCParticle*> _mcpartvec{};
   int   _printing{};
   std::vector<int> _pdgs{};
+  int _PDG{};
 
    //need to no BField to calculate stuff
    double BField{};

@@ -27,6 +27,7 @@
 	<processor name="MyMCParticleSelection" type="MCParticleSelection">   
 
 		<parameter name="Pdgs" type="IntVec"> 421 -421 </parameter>
+		<parameter name="PDG" value="421" />
 
 		<!-- input/output collection names -->
 		<parameter name="InputTrackCollectionName" value="MarlinTrkTracks" />

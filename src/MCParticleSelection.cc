@@ -21,6 +21,11 @@ MCParticleSelection::MCParticleSelection() : Processor("MCParticleSelection") {
 				    pdgs);
 
 	
+	registerProcessorParameter("PDG",
+				   "PDG code of particle to be picked out",
+				    _PDG,
+				    0);
+	
 
    	std::string inputTrackCollectionName = "x";
   	registerInputCollection( LCIO::TRACK,
@@ -144,7 +149,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 	for(int i=0; i< _mcpartvec.size(); i++){
 		pdg = _mcpartvec.at(i)->getPDG();
 		
-		if(pdg == 421 || pdg == -421){
+		if(pdg == _PDG){
 				//std::cout<<"found PDG: "<<pdg<<std::endl;
 
 				//hacks make sure we find a kaon + pion now
