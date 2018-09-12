@@ -174,16 +174,18 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 			}//end daughter loop
 
 			if(flag1 && flag2 && flag3 ){
+				int nmatches = 0;
 				std::cout<<"found d0->Kpi"<<std::endl;
 				//first add the mc particle 
 				mcCollection->addElement( _mcpartvec.at(i) );
 				//also add daughters
+				FindTracks(evt);
 				for(int x=0; x< daughters.size(); x++){
 					mcCollection->addElement( daughters.at(x) );
 				
 				//now loop and select tracks of this event with dislaced vertices only > 0.5mm
 
-				FindTracks(evt);
+				
 
 				MCParticle* mcp = daughters.at(x);
 				const double* mcpp = mcp->getMomentum();
@@ -202,7 +204,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 					double omdwn = om - 3*omerr;
 					if( (omdwn <= ommc) && (ommc <= omup) ){
 						std::cout<<"found a matched track"<<std::endl;
-						
+						nmatches++;
 						TrackImpl* t = new TrackImpl();
 						t->setD0( T->getD0() );
 						t->setPhi( T->getPhi() );
@@ -215,6 +217,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 					}
 				}
 				}//end daughter loop
+				std::cout<<"found nmatches "<<nmatches<<std::endl;
 			}//end flag condition
 			
 		}//end d0 check
