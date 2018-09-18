@@ -200,8 +200,8 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 					//if( (_trackvec.at(j)->getD0() >= 0.01) || (_trackvec.at(j)->getZ0() >= 0.01) ){
 					double om = T->getOmega();
 					double omerr = sqrt(T->getCovMatrix()[5]);
-					double omup = om + 3*omerr;
-					double omdwn = om - 3*omerr;
+					double omup = om + 2*omerr;
+					double omdwn = om - 2*omerr;
 					if( (omdwn <= ommc) && (ommc <= omup) ){
 						std::cout<<"found a matched track"<<std::endl;
 						nmatches++;
@@ -218,9 +218,14 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 				}
 				}//end daughter loop
 				std::cout<<"found nmatches "<<nmatches<<std::endl;
+			//add collection here, assume only 1 D0 per event and break out
+			evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
+ 			evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
+			break;
+
 			}//end flag condition
 			
-		}//end d0 check
+		}//end pdg check
 		
 	}//end mcpartvec loop
   
@@ -228,8 +233,8 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
   // Add new collection to event
 //comment this next line when appending to collection
   
-  evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
-  evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
+ // evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
+  //evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
 
  std::cout << "======================================== event " << nEvt << std::endl ;
 nEvt++;
