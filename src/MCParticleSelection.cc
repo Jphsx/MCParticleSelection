@@ -218,10 +218,7 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
 				}
 				}//end daughter loop
 				std::cout<<"found nmatches "<<nmatches<<std::endl;
-			//add collection here, assume only 1 D0 per event and break out
-			evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
- 			evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
-			break;
+		
 
 			}//end flag condition
 			
@@ -233,8 +230,8 @@ void MCParticleSelection::processEvent( LCEvent * evt ) {
   // Add new collection to event
 //comment this next line when appending to collection
   
- // evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
-  //evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
+ evt->addCollection(trkCollection , _outputTrkCollectionName.c_str() ); 
+  evt->addCollection(mcCollection , _outputMCCollectionName.c_str() );
 
  std::cout << "======================================== event " << nEvt << std::endl ;
 nEvt++;
